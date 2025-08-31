@@ -8,7 +8,7 @@
         <p class="py-6">
           Keep track of your travels and adventures. Add locations, photos, and notes to create a digital journal of your journeys.
         </p>
-        <button class="btn btn-accent">
+        <button class="btn btn-secondary">
           Sign In With Github <Icon name="tabler:brand-github" size="24" />
         </button>
       </div>
