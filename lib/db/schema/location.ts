@@ -1,0 +1,13 @@
+import { real } from "drizzle-orm/gel-core";
+import { int, sqliteTable, text } from "drizzle-orm/sqlite-core";
+
+export const location = sqliteTable("location", {
+  id: int().primaryKey({ autoIncrement: true }),
+  name: text().notNull(),
+  slug: text().notNull().unique(),
+  description: text(),
+  lat: real().notNull(),
+  long: real().notNull(),
+  created_at: int().notNull().$default(() => Date.now()),
+  updated_at: int().notNull().$default(() => Date.now()).$onUpdate(() => Date.now()),
+});
