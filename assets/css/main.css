@@ -94,3 +94,5 @@
   --depth: 1;
   --noise: 0;
 }
+
+@custom-variant hover (&:hover);
