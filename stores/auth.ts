@@ -14,7 +14,10 @@ export const useAuthStore = defineStore("useAuthStore", () => {
 
   const loading = computed(() => session.value?.isPending);
 
+  const loggingIn = ref(false);
+
   async function signIn() {
+    loggingIn.value = true;
     await authClient.signIn.social({
       provider: "github",
       callbackURL: "/dashboard",
@@ -30,6 +33,7 @@ export const useAuthStore = defineStore("useAuthStore", () => {
   return {
     init,
     loading,
+    loggingIn,
     signIn,
     signOut,
     user,
