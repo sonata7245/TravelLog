@@ -20,6 +20,7 @@ export const useAuthStore = defineStore("useAuthStore", () => {
     const { csrf } = useCsrf();
     const headers = new Headers();
     headers.append("csrf-token", csrf);
+
     loggingIn.value = true;
     await authClient.signIn.social({
       provider: "github",

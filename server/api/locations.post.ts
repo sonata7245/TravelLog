@@ -1,3 +1,4 @@
+
 import db from "~/lib/db";
 import { InsertLocation, location } from "~/lib/db/schema";
 
@@ -8,6 +9,11 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Unuthorized",
     }));
   }
+
+
+import { InsertLocation } from "~/lib/db/schema";
+
+export default defineEventHandler(async (event) => {
 
   const result = await readValidatedBody(event, InsertLocation.safeParse);
 
@@ -40,4 +46,12 @@ export default defineEventHandler(async (event) => {
   }).returning();
 
   return created;
+
+    return sendError(event, createError({
+      statusCode: 422,
+      statusMessage,
+    }));
+  }
+
+  return result.data;
 });
