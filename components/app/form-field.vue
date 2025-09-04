@@ -4,6 +4,7 @@ const props = defineProps<{
   label: string;
   name: string;
   type?: string;
+  disabled?: boolean;
 }>();
 </script>
 
@@ -20,6 +21,7 @@ const props = defineProps<{
                 'input': !props.type || props.type === 'text' || props.type === 'number',
                 'textarea': props.type === 'textarea',
       }"
+      :disabled="disabled"
     />
     <p v-if="props.error" class="fieldset-label text-error">
       {{ props.error }}
