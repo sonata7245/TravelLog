@@ -11,7 +11,7 @@ const submitError = ref("");
 const loading = ref(false);
 const submitted = ref(false);
 
-const { handleSubmit, errors, meta } = useForm({
+const { handleSubmit, errors, meta, setErrors } = useForm({
   validationSchema: toTypedSchema(InsertLocation),
 });
 
@@ -28,7 +28,9 @@ const onSubmit = handleSubmit(async (values) => {
   }
   catch (e) {
     const error = e as FetchError;
-    setErrors(error.data?.data);
+    if (error.data?.data) {
+      setErrors(error.data?.data);
+    }
     submitError.value = error.statusMessage || "An Uknown Error Occurred.";
   }
   loading.value = false;

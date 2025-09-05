@@ -1,4 +1,4 @@
-import { int, real, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { int, real, sqliteTable, text, unique } from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-zod";
 
 import { user } from "./auth";
@@ -13,7 +13,9 @@ export const location = sqliteTable("location", {
   userId: int().notNull().references(() => user.id),
   created_at: int().notNull().$default(() => Date.now()),
   updated_at: int().notNull().$default(() => Date.now()).$onUpdate(() => Date.now()),
-});
+}, t => [
+  unique().on(t.name, t.userId),
+]);
 
 export const InsertLocation = createInsertSchema(location, {
   name: field => field.min(1, "required").max(100, "Name must be 100 characters or less"),
