@@ -29,3 +29,5 @@ export const InsertLocation = createInsertSchema(location, {
   created_at: true,
   updated_at: true,
 });
+
+export type InsertLocation = z.infer<typeof InsertLocation>;
