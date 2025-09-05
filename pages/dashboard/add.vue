@@ -47,7 +47,7 @@ onBeforeRouteLeave(async () => {
   }
   catch (e) {
     const error = e as FetchError;
-    submitError.value = error.statusMessage || "An Uknown Error Occurred.";
+    submitError.value = error.data?.statusMessage || error.statusMessage || "An Uknown Error Occurred.";
   }
 });
 </script>
