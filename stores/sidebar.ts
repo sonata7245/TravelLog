@@ -7,8 +7,9 @@ export type SidebarItem = {
 
 export const useSidebarStore = defineStore("useSidebarStore", () => {
   const sidebarItems = ref<SidebarItem[]>([]);
-
+  const loading = ref(false);
   return {
     sidebarItems,
+    loading,
   };
 });
