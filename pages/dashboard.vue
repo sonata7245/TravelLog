@@ -1,9 +1,14 @@
 <script setup lang="ts">
 const isSidebarOpen = ref(false);
+const route = useRoute();
 const sidebarStore = useSidebarStore();
+const locationsStore = useLocationStore();
 
 onMounted(() => {
   isSidebarOpen.value = localStorage.getItem("isSidebarOpen") === "true";
+  if (route.path !== "/dashboard") {
+    locationsStore.refresh();
+  }
 });
 
 function toggleSidebar() {
@@ -36,7 +41,7 @@ function toggleSidebar() {
         <div v-if="sidebarStore.loading" class="px-4">
           <div class="skeleton h-4 w-full" />
         </div>
-        <div v-else-if="sidebarStore.sidebarItems.length" class="flex flex-col">
+        <div v-if="!sidebarStore.loading && sidebarStore.sidebarItems.length" class="flex flex-col">
           <SidebarButton
             v-for="item in sidebarStore.sidebarItems"
             :key="item.id"
@@ -56,8 +61,9 @@ function toggleSidebar() {
         />
       </div>
     </div>
-    <div class="flex-1">
+    <div class="flex-1 flex flex-col">
       <NuxtPage />
+      <AppMap class="flex-1" />
     </div>
   </div>
 </template>
