@@ -43,3 +43,9 @@ export async function insertLocation(insertable: InsertLocation, slug: string, u
   }).returning();
   return created;
 }
+
+export async function findLocations(userId: number) {
+  return db.query.location.findMany({
+    where: eq(location.userId, userId),
+  });
+}
