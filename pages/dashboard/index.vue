@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+
 import { useSidebarStore } from "~/stores/sidebar";
 
 const { data, status } = await useFetch("/api/locations", {
