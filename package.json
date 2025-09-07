@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@antfu/eslint-config": "^5.2.1",
+    "@indoorequal/vue-maplibre-gl": "^8.4.2",
     "@libsql/client": "^0.15.14",
     "@nuxt/eslint": "1.9.0",
     "@nuxt/icon": "1.15.0",
