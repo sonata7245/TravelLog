@@ -62,7 +62,11 @@ onBeforeRouteLeave(async () => {
         A location is a place you have traveled or will travel to. It can be a city, contry, state, or point of interest. You can add specific times you visited this location after adding it.
       </p>
     </div>
-    <div v-if="submitError" role="alert" class="alert alert-error">
+    <div
+      v-if="submitError"
+      role="alert"
+      class="alert alert-error"
+    >
       <span>{{ submitError }}</span>
     </div>
     <form class="flex flex-col gap-2" @submit.prevent="onSubmit">
@@ -103,7 +107,11 @@ onBeforeRouteLeave(async () => {
         >
           <Icon name="tabler:arrow-left" /> Cancel
         </button>
-        <button :disabled="loading" type="submit" class="btn btn-primary">
+        <button
+          :disabled="loading"
+          type="submit"
+          class="btn btn-primary"
+        >
           Add <span v-if="loading" class="loading loading-spinner loading-sm" /><Icon v-else name="tabler:plus" />
         </button>
       </div>
