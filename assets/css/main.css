@@ -5,94 +5,44 @@
     dark --prefersdark;
 }
 
-@plugin "daisyui/theme" {
-  name: "light";
-  default: true;
-  prefersdark: false;
-  color-scheme: "light";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-  --color-base-100: oklch(100% 0 0); /* Sail White */
-  --color-base-200: oklch(99% 0 0); /* Shore Sand */
-  --color-base-300: oklch(97% 0 0); /* Earthy tone / alt background */
-  --color-base-content: oklch(51.47% 0.07 240.62); /* Lake Blue text */
-
-  --color-primary: oklch(30.77% 0.277 265.58); /* Cobalt Blue */
-  --color-primary-content: oklch(97.59% 0.007 132.44); /* Sail White */
-
-  --color-secondary: oklch(77.85% 0.095 187.25); /* Spinnaker Teal */
-  --color-secondary-content: oklch(51.47% 0.07 240.62);
-
-  --color-accent: oklch(70.46% 0.056 217.54); /* Muted Teal*/
-  --color-accent-content: oklch(51.47% 0.07 240.62);
-
-  --color-neutral: oklch(90.04% 0.032 96.65); /* Shore Sand */
-  --color-neutral-content: oklch(51.47% 0.07 240.62);
-
-  --color-info: oklch(77.85% 0.095 187.25); /* Spinnaker Teal */
-  --color-info-content: oklch(97.59% 0.007 132.44);
-
-  --color-success: oklch(77.85% 0.095 187.25); /* Spinnaker Teal */
-  --color-success-content: oklch(51.47% 0.07 240.62);
-
-  --color-warning: oklch(84.91% 0.166 81.45); /* Sunlit Gold */
-  --color-warning-content: oklch(51.47% 0.07 240.62);
-
-  --color-error: oklch(57.31% 0.195 22.62); /* Error Red */
-  --color-error-content: oklch(97.59% 0.007 132.44);
-
-  --radius-selector: 0.5rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.5rem;
-  --size-selector: 0.25rem;
-  --size-field: 0.25rem;
-  --border: 1px;
-  --depth: 1;
-  --noise: 0;
+.maplibregl-popup-close-button {
+  @apply px-2;
 }
 
-@plugin "daisyui/theme" {
-  name: "sailchelan-dark";
-  default: false;
-  prefersdark: true;
-  color-scheme: "dark";
+.location-list {
+  @apply flex flex-nowrap mt-4 gap-2 overflow-auto;
+}
 
-  --color-base-100: oklch(30% 0.06 240.62); /* Darkened Lake Blue base */
-  --color-base-200: oklch(35% 0.05 240.62); /* Slightly lighter blue */
-  --color-base-300: oklch(51.47% 0.07 240.62); /* Lake Blue mid-tone */
-  --color-base-content: oklch(97.59% 0.007 132.44); /* Sail White text */
+.page-content-top {
+  @apply p-4 min-h-72;
+}
 
-  --color-primary: oklch(51.47% 0.07 240.62); /* Darkened Lake Blue */
-  --color-primary-content: oklch(97.59% 0.007 132.44);
+html[data-theme="dark"] {
+  .maplibregl-popup-content {
+    @apply text-white bg-gray-800;
+  }
 
-  --color-secondary: oklch(39% 0.08 20); /* Deeper red/rose accent */
-  --color-secondary-content: oklch(97.59% 0.007 132.44);
+  .maplibregl-popup-anchor-bottom .maplibregl-popup-tip,
+  .maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip,
+  .maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip {
+    @apply border-t-gray-800;
+  }
 
-  --color-accent: oklch(77.85% 0.095 187.25); /* Spinnaker Teal */
-  --color-accent-content: oklch(30% 0.06 240.62);
+  .maplibregl-popup-anchor-top .maplibregl-popup-tip,
+  .maplibregl-popup-anchor-top-right .maplibregl-popup-tip,
+  .maplibregl-popup-anchor-top-left .maplibregl-popup-tip {
+    @apply border-b-gray-800;
+  }
 
-  --color-neutral: oklch(35% 0.05 240.62); /* Muted Lake Blue */
-  --color-neutral-content: oklch(97.59% 0.007 132.44);
+  .maplibregl-popup-anchor-left .maplibregl-popup-tip {
+    @apply border-r-gray-800;
+  }
 
-  --color-info: oklch(77.85% 0.095 187.25); /* Spinnaker Teal */
-  --color-info-content: oklch(97.59% 0.007 132.44);
-
-  --color-success: oklch(70% 0.1 190); /* Bright teal-green */
-  --color-success-content: oklch(30% 0.06 240.62);
-
-  --color-warning: oklch(84.91% 0.166 81.45); /* Sunlit Gold */
-  --color-warning-content: oklch(30% 0.06 240.62);
-
-  --color-error: oklch(57.31% 0.195 22.62); /* Error Red */
-  --color-error-content: oklch(97.59% 0.007 132.44);
-
-  --radius-selector: 0.5rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.5rem;
-  --size-selector: 0.25rem;
-  --size-field: 0.25rem;
-  --border: 1px;
-  --depth: 1;
-  --noise: 0;
+  .maplibregl-popup-anchor-right .maplibregl-popup-tip {
+    @apply border-l-gray-800;
+  }
 }
 
 @custom-variant hover (&:hover);
