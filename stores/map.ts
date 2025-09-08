@@ -60,7 +60,6 @@ export const useMapStore = defineStore("useMapStore", () => {
         });
       }
     });
-
     watch(addedPoint, (newValue, oldValue) => {
       if (newValue && !oldValue) {
         map.map?.flyTo({
@@ -72,7 +71,7 @@ export const useMapStore = defineStore("useMapStore", () => {
     }, {
       immediate: true,
     });
-  }
+  };
 
   return {
     init,
