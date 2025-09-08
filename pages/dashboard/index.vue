@@ -8,6 +8,7 @@ const { locations, status } = storeToRefs(locationsStore);
 
 onMounted(() => {
   locationsStore.refresh();
+  mapStore.addedPoint = null;
 });
 </script>
 

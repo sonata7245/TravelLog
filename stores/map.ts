@@ -6,6 +6,7 @@ export const useMapStore = defineStore("useMapStore", () => {
   const mapPoints = ref<MapPoint[]>([]);
   const selectedPoint = ref<MapPoint | null>(null);
   const shouldFlyTo = ref(true);
+  const addedPoint = ref<MapPoint | null>(null);
 
   function selectPointWithoutFlyTo(point: MapPoint | null) {
     shouldFlyTo.value = false;
@@ -38,6 +39,8 @@ export const useMapStore = defineStore("useMapStore", () => {
     });
 
     effect(() => {
+      if (addedPoint.value)
+        return;
       if (selectedPoint.value) {
         if (shouldFlyTo.value) {
           map.map?.flyTo({
@@ -57,6 +60,17 @@ export const useMapStore = defineStore("useMapStore", () => {
         });
       }
     });
+    watch(addedPoint, (newValue, oldValue) => {
+      if (newValue && !oldValue) {
+        map.map?.flyTo({
+          center: [newValue.long, newValue.lat],
+          speed: 0.8,
+          zoom: 3,
+        });
+      }
+    }, {
+      immediate: true,
+    });
   };
 
   return {
@@ -64,5 +78,6 @@ export const useMapStore = defineStore("useMapStore", () => {
     mapPoints,
     selectedPoint,
     selectPointWithoutFlyTo,
+    addedPoint,
   };
 });
