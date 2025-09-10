@@ -49,3 +49,12 @@ export async function findLocations(userId: number) {
     where: eq(location.userId, userId),
   });
 }
+
+export async function findLocation(slug: string, userId: number) {
+  return db.query.location.findFirst({
+    where: and(
+      eq(location.slug, slug),
+      eq(location.userId, userId),
+    ),
+  });
+}

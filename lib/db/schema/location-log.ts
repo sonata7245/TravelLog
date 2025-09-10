@@ -1,5 +1,4 @@
-import { real } from "drizzle-orm/gel-core";
-import { int, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { int, real, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 import { user } from "./auth";
 import { location } from "./location";
