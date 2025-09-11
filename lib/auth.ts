@@ -12,6 +12,11 @@ export type UserWithId = Omit<User, "id"> & {
 };
 
 export const auth = betterAuth({
+  trustedOrigins: [
+    "http://localhost:3000",
+    "https://localhost:3000",
+  ],
+
   hooks: {
     after: createAuthMiddleware(async (ctx) => {
       if (ctx.path === "/get-session") {

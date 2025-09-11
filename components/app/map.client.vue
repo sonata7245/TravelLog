@@ -3,6 +3,7 @@ import type { LngLat } from "maplibre-gl";
 
 import { CENTER_USA } from "~/lib/constants";
 import { useMapStore } from "~/stores/map";
+import { isPointSelected } from "~/utils/map-points";
 
 const route = useRoute();
 
@@ -67,7 +68,7 @@ onMounted(() => {
             class="tooltip toolti-top hover:cursor-pointer"
             :data-tip="point.name"
             :class="{
-              'tooltip-open': mapStore.selectedPoint === point,
+              'tooltip-open': isPointSelected(point, mapStore.selectedPoint),
             }"
             @mouseenter="mapStore.selectPointWithoutFlyTo(point)"
             @mouseleave="mapStore.selectPointWithoutFlyTo(null)"
@@ -75,7 +76,7 @@ onMounted(() => {
             <Icon
               name="tabler:map-pin-filled"
               size="30"
-              :class="mapStore.selectedPoint === point ? 'text-accent' : 'text-primary'"
+              :class="isPointSelected(point, mapStore.selectedPoint) ? 'text-accent' : 'text-primary'"
             />
           </div>
         </template>
@@ -83,7 +84,18 @@ onMounted(() => {
           <h3 class="text-xl">
             {{ point.name }}
           </h3>
-          <p>{{ point.description }}</p>
+          <p v-if="point.description">
+            {{ point.description }}
+          </p>
+          <div class="flex justify-end mt-4">
+            <NuxtLink
+              v-if="point.to"
+              :to="point.to"
+              class="btn btn-sm-outline"
+            >
+              {{ point.toLabel }}
+            </NuxtLink>
+          </div>
         </mgl-popup>
       </MglMarker>
     </div>
