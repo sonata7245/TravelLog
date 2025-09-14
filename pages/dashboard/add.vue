@@ -20,7 +20,7 @@ const { handleSubmit, errors, meta, setErrors, setFieldValue, controlledValues }
   initialValues: {
     name: "",
     description: "",
-    long: -4,
+    long: (CENTER_USA as [number, number])[0],
     lat: (CENTER_USA as [number, number])[1],
   },
 });
