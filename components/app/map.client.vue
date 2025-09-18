@@ -3,14 +3,10 @@ import type { LngLat } from "maplibre-gl";
 
 import { CENTER_USA } from "~/lib/constants";
 import { useMapStore } from "~/stores/map";
-import { isPointSelected } from "~/utils/map-points";
-
-const route = useRoute();
 
 const mapStore = useMapStore();
 
 const colorMode = useColorMode();
-// const style = "https://tiles.openfreemap.org/styles/liberty";
 const style = computed(() =>
   colorMode.value === "dark"
     ? "/styles/dark.json"
@@ -37,67 +33,65 @@ onMounted(() => {
     :zoom="zoom"
   >
     <MglNavigationControl />
-    <div v-if="route.path === '/dashboard/add'">
-      <MglMarker
-        :coordinates="[mapStore.addedPoint.long, mapStore.addedPoint.lat]"
-        draggable
-        @update:coordinates="updateAddedPoint"
-      >
-        <template #marker>
-          <div
-            class="tooltip tooltip-top hover:cursor-pointer"
-            data-tip="Drag to your desired location"
+    <MglMarker
+      v-if="mapStore.addedPoint"
+      :coordinates="[mapStore.addedPoint.long, mapStore.addedPoint.lat]"
+      draggable
+      class-name="z-50"
+      @update:coordinates="updateAddedPoint"
+    >
+      <template #marker>
+        <div
+          class="tooltip tooltip-top hover:cursor-pointer"
+          data-tip="Drag to your desired location"
+        >
+          <Icon
+            name="tabler:map-pin-filled"
+            size="40"
+            class="text-secondary"
+          />
+        </div>
+      </template>
+    </MglMarker>
+    <MglMarker
+      v-for="point in mapStore.mapPoints"
+      :key="point.id"
+      :coordinates="[point.long, point.lat]"
+    >
+      <template #marker>
+        <div
+          class="tooltip toolti-top hover:cursor-pointer"
+          :data-tip="point.name"
+          :class="{
+            'tooltip-open': isPointSelected(point, mapStore.selectedPoint),
+          }"
+          @mouseenter="mapStore.selectedPoint = point"
+          @mouseleave="mapStore.selectedPoint = null"
+        >
+          <Icon
+            name="tabler:map-pin-filled"
+            size="30"
+            :class="isPointSelected(point, mapStore.selectedPoint) ? 'text-accent' : 'text-primary'"
+          />
+        </div>
+      </template>
+      <mgl-popup>
+        <h3 class="text-xl">
+          {{ point.name }}
+        </h3>
+        <p v-if="point.description">
+          {{ point.description }}
+        </p>
+        <div class="flex justify-end mt-4">
+          <NuxtLink
+            v-if="point.to"
+            :to="point.to"
+            class="btn btn-sm-outline"
           >
-            <Icon
-              name="tabler:map-pin-filled"
-              size="40"
-              class="text-secondary"
-            />
-          </div>
-        </template>
-      </MglMarker>
-    </div>
-    <div v-else>
-      <MglMarker
-        v-for="point in mapStore.mapPoints"
-        :key="point.id"
-        :coordinates="[point.long, point.lat]"
-      >
-        <template #marker>
-          <div
-            class="tooltip toolti-top hover:cursor-pointer"
-            :data-tip="point.name"
-            :class="{
-              'tooltip-open': isPointSelected(point, mapStore.selectedPoint),
-            }"
-            @mouseenter="mapStore.selectPointWithoutFlyTo(point)"
-            @mouseleave="mapStore.selectPointWithoutFlyTo(null)"
-          >
-            <Icon
-              name="tabler:map-pin-filled"
-              size="30"
-              :class="isPointSelected(point, mapStore.selectedPoint) ? 'text-accent' : 'text-primary'"
-            />
-          </div>
-        </template>
-        <mgl-popup>
-          <h3 class="text-xl">
-            {{ point.name }}
-          </h3>
-          <p v-if="point.description">
-            {{ point.description }}
-          </p>
-          <div class="flex justify-end mt-4">
-            <NuxtLink
-              v-if="point.to"
-              :to="point.to"
-              class="btn btn-sm-outline"
-            >
-              {{ point.toLabel }}
-            </NuxtLink>
-          </div>
-        </mgl-popup>
-      </MglMarker>
-    </div>
+            {{ point.toLabel }}
+          </NuxtLink>
+        </div>
+      </mgl-popup>
+    </MglMarker>
   </MglMap>
 </template>
