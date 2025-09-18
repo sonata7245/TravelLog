@@ -35,7 +35,11 @@ export async function findUniqueSlug(slug: string) {
   return slug;
 }
 
-export async function insertLocation(insertable: InsertLocation, slug: string, userId: number) {
+export async function insertLocation(
+  insertable: InsertLocation,
+  slug: string,
+  userId: number,
+) {
   const [created] = await db.insert(location).values({
     ...insertable,
     slug,
@@ -60,4 +64,16 @@ export async function findLocation(slug: string, userId: number) {
       locationLogs: true,
     },
   });
+}
+
+export async function updateLocationBySlug(
+  updates: InsertLocation,
+  slug: string,
+  userId: number,
+) {
+  const [updated] = await db.update(location).set(updates).where(and(
+    eq(location.slug, slug),
+    eq(location.userId, userId),
+  )).returning();
+  return updated;
 }
