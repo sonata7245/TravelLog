@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CURRENT_LOCATION_PAGES, EDIT_PAGES, LOCATION_PAGES } from "~/lib/constants";
+import { CURRENT_LOCATION_LOG_PAGES, CURRENT_LOCATION_PAGES, EDIT_PAGES, LOCATION_PAGES } from "~/lib/constants";
 import { isPointSelected } from "~/utils/map-points";
 
 const isSidebarOpen = ref(false);
@@ -14,8 +14,12 @@ if (LOCATION_PAGES.has(route.name?.toString() || "")) {
   await locationsStore.refreshLocations();
 }
 
-if (CURRENT_LOCATION_PAGES.has(route.name?.toString() || "")) {
+if (CURRENT_LOCATION_PAGES.has(route.name?.toString() || "") || CURRENT_LOCATION_LOG_PAGES.has(route.name?.toString() || "")) {
   await locationsStore.refreshCurrentLocation();
+}
+
+if (CURRENT_LOCATION_LOG_PAGES.has(route.name?.toString() || "")) {
+  await locationsStore.refreshCurrentLocationLog();
 }
 
 onMounted(() => {
@@ -47,7 +51,7 @@ effect(() => {
     if (currentLocation.value && currentLocationStatus.value !== "pending") {
       sidebarStore.sidebarTopItems.push(
         {
-          id: "link-view-logs",
+          id: "link-dashboard",
           label: currentLocation.value.name,
           to: {
             name: "dashboard-location-slug",
@@ -80,6 +84,23 @@ effect(() => {
           icon: "tabler:plus",
         },
       );
+    };
+  }
+  else if (CURRENT_LOCATION_LOG_PAGES.has(route.name?.toString() || "")) {
+    if (currentLocation.value && currentLocationStatus.value !== "pending") {
+      sidebarStore.sidebarTopItems = [
+        {
+          id: "link-location",
+          label: `Back to ${currentLocation.value.name}`,
+          to: {
+            name: "dashboard-location-slug",
+            params: {
+              slug: route.params.slug,
+            },
+          },
+          icon: "tabler:arrow-left",
+        },
+      ];
     };
   }
 });

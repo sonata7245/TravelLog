@@ -3,10 +3,13 @@ import type { FetchError } from "ofetch";
 
 import { createMapPointFromLocationLog } from "~/utils/map-points";
 
-const route = useRoute();
-const mapStore = useMapStore();
+const route = useRoute(); ;
 const locationStore = useLocationStore();
-const { currentLocation: location, currentLocationError: error, currentLocationStatus: status } = storeToRefs(locationStore);
+const {
+  currentLocation: location,
+  currentLocationError: error,
+  currentLocationStatus: status,
+} = storeToRefs(locationStore);
 
 const isOpen = ref(false);
 const deleteError = ref("");
@@ -45,14 +48,6 @@ async function confirmDelete() {
 onBeforeRouteUpdate((to) => {
   if (to.name === "dashboard-location-slug") {
     locationStore.refreshCurrentLocation();
-  }
-});
-
-effect(() => {
-  if (location.value) {
-    mapStore.mapPoints = [
-      location.value,
-    ];
   }
 });
 </script>
@@ -116,7 +111,7 @@ effect(() => {
         </NuxtLink>
       </div>
     </div>
-    <div v-if="route.name === 'dashboard-location-slug' && location?.locationLogs.length" class="location-list">
+    <div v-if="route.name === 'dashboard-location-slug' && !loading && location?.locationLogs.length" class="location-list">
       <LocationCard
         v-for="log in location.locationLogs"
         :key="log.id"
