@@ -47,7 +47,7 @@ onMounted(() => {
         >
           <Icon
             name="tabler:map-pin-filled"
-            size="40"
+            size="35"
             class="text-secondary"
           />
         </div>
