@@ -35,7 +35,8 @@ async function confirmDelete() {
     $fetch(`/api/locations/${route.params.slug}`, {
       method: "DELETE",
     });
-
+    locationStore.refreshCurrentLocation();
+    locationStore.refreshCurrentLocationLog();
     navigateTo("/dashboard");
   }
   catch (e) {
